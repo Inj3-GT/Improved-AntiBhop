@@ -1,0 +1,34 @@
+--- Script By Inj3
+--- Script By Inj3
+--- Script By Inj3
+----- https://steamcommunity.com/id/Inj3/
+----- https://github.com/Inj3-GT/
+
+local ipr_delay_bhop = 1.3
+local ipr_key = IN_JUMP
+
+hook.Add("StartCommand", "Ipr_Anti_BhopRestrict", function(ply, cmd)
+    if not cmd:KeyDown(ipr_key) then
+        return
+    end
+    if not IsValid(ply) or not ply:Alive() then
+        return
+    end
+
+    if (cmd:CommandNumber() ~= 0) then
+        local ipr_cur = CurTime()
+
+        if (ply.ipr_push_bhop) and (ply.ipr_nextc_bhop) then
+            if (ipr_cur < ply.ipr_nextc_bhop) then
+                cmd:ClearButtons()
+            else
+                ply.ipr_push_bhop = false
+            end
+        end
+
+        if not ply.ipr_push_bhop then
+            ply.ipr_nextc_bhop = ipr_cur + ipr_delay_bhop
+            ply.ipr_push_bhop = true
+        end
+    end
+end)
