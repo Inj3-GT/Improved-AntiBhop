@@ -22,6 +22,7 @@ hook.Add("StartCommand", "Ipr_Anti_BhopRestrict", function(ply, cmd)
         if (ply.ipr_push_bhop) then
             if (ipr_cur < ply.ipr_nextc_bhop) then
                 cmd:ClearButtons()
+                cmd:SetButtons(IN_ATTACK)
             else
                 ply.ipr_push_bhop = false
             end
