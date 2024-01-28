@@ -5,6 +5,8 @@
 ----- https://github.com/Inj3-GT/
 
 local ipr_delay_bhop = 1.3
+local ipr_disabled_autojump = false
+
 local ipr_key = IN_JUMP
 local ipr_movetype = MOVETYPE_NOCLIP
 
@@ -23,6 +25,10 @@ hook.Add("StartCommand", "Ipr_Anti_BhopRestrict", function(ply, cmd)
             if (ipr_cur < ply.ipr_nextc_bhop) then
                 cmd:RemoveKey(ipr_key)
             else
+                if (SERVER) and (ipr_disabled_autojump) then
+                    ply:ConCommand("-jump")
+                end
+
                 ply.ipr_push_bhop = false
             end
         end
