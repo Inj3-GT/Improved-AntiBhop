@@ -7,6 +7,7 @@
 local ipr_delay_bhop = 1.3
 local ipr_key = IN_JUMP
 local ipr_movetype = MOVETYPE_NOCLIP
+local ipr_fixattack = IN_ATTACK
 
 hook.Add("StartCommand", "Ipr_Anti_BhopRestrict", function(ply, cmd)
     if not cmd:KeyDown(ipr_key) then
@@ -22,7 +23,7 @@ hook.Add("StartCommand", "Ipr_Anti_BhopRestrict", function(ply, cmd)
         if (ply.ipr_push_bhop) then
             if (ipr_cur < ply.ipr_nextc_bhop) then
                 cmd:ClearButtons()
-                cmd:SetButtons(IN_ATTACK)
+                cmd:SetButtons(ipr_fixattack)
             else
                 ply.ipr_push_bhop = false
             end
