@@ -39,14 +39,14 @@ hook.Add("StartCommand", "Ipr_Anti_BhopRestrict", function(ply, cmd)
 
         if not ipr_bhop[ply].pushc then
             ipr_bhop[ply].nextc = ipr_cur + ipr_delay_bhop
-            ipr_bhop[ply].pushc  = true
+            ipr_bhop[ply].pushc = true
         end
     end
 end)
 
 if (SERVER) then
     hook.Add("PlayerDisconnected", "Ipr_Anti_BhopLeave", function(ply)
-        if ipr_bhop[ply] then
+        if (ipr_bhop[ply]) then
             ipr_bhop[ply] = nil
         end
     end)
