@@ -9,6 +9,7 @@ local ipr_disabled_autojump = false
 
 local ipr_key = IN_JUMP
 local ipr_movetype = MOVETYPE_NOCLIP
+local ipr_bhop = {}
 
 hook.Add("StartCommand", "Ipr_Anti_BhopRestrict", function(ply, cmd)
     if not cmd:KeyDown(ipr_key) then
@@ -20,22 +21,33 @@ hook.Add("StartCommand", "Ipr_Anti_BhopRestrict", function(ply, cmd)
             return
         end
         local ipr_cur = CurTime()
-
-        if (ply.ipr_push_bhop) then
-            if (ipr_cur < ply.ipr_nextc_bhop) then
+        if not ipr_bhop[ply] then
+            ipr_bhop[ply] = {}
+        end
+        
+        if (ipr_bhop[ply].pushc) then
+            if (ipr_cur < ipr_bhop[ply].nextc) then
                 cmd:RemoveKey(ipr_key)
             else
                 if (SERVER) and (ipr_disabled_autojump) then
                     ply:ConCommand("-jump")
                 end
 
-                ply.ipr_push_bhop = false
+                ipr_bhop[ply].pushc = false
             end
         end
 
-        if not ply.ipr_push_bhop then
-            ply.ipr_nextc_bhop = ipr_cur + ipr_delay_bhop
-            ply.ipr_push_bhop = true
+        if not ipr_bhop[ply].pushc then
+            ipr_bhop[ply].nextc = ipr_cur + ipr_delay_bhop
+            ipr_bhop[ply].pushc  = true
         end
     end
 end)
+
+if (SERVER) then
+    hook.Add( "PlayerDisconnected", "Ipr_Anti_BhopLeave", function(ply)
+        if ipr_bhop[ply] then
+            ipr_bhop[ply] = nil
+        end
+    end)
+end
