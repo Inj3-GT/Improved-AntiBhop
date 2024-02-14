@@ -4,8 +4,10 @@
 ----- https://steamcommunity.com/id/Inj3/
 ----- https://github.com/Inj3-GT/
 
+-----// Configuration
 local ipr_delay_bhop = 1.3
 local ipr_disabled_autojump = false
+-----\\
 
 local ipr_key = IN_JUMP
 local ipr_movetype = MOVETYPE_NOCLIP
