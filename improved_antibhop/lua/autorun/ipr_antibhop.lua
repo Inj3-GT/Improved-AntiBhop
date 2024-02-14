@@ -4,7 +4,7 @@
 ----- https://steamcommunity.com/id/Inj3/
 ----- https://github.com/Inj3-GT/
 
------// Configuration
+-----//Configuration
 local ipr_delay_bhop = 1.3
 local ipr_disabled_autojump = false
 -----\\
